@@ -16,6 +16,7 @@ Cosine Similarity is widely used in NLP and information retrieval, particularly 
 
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
+import nltk
 
 # This is a python implementation of cosine similarity, using numpy
 def cosine_similarity(vec1, vec2):
@@ -55,16 +56,35 @@ def sampleCosineSim():
 # It should do the following
 # 1. tokenize and vectorize the corpus argument
 # 2. Return the cosine similarity result of the vectorized text
-# Feel free to play with different text in app.py file, and see if you can find texts that are not at all similar (< .2) or very similar (> .6)!
+# Feel free to play with different text in app.py file, 
+# and see if you can find texts that are not at all similar (< .2) or very similar (> .6)!
 def cosSimExercise(corpus:list[str]):
-    # TODO: Complete this function
-    return
+
+
+    # Tokenize and vectorize the texts
+    vectorizer = CountVectorizer().fit_transform(corpus).toarray()
+    #print(vectorizer)
+
+    # Calculate cosine similarity
+    cosine_sim = cosine_similarity(vectorizer[0, :], vectorizer[1, :])
+
+    # Cosine Similarity ranges from 0 to 1, a number closer to 1 means that they are more similar
+    print("Cosine Similarity:")
+    #print(cosine_sim)
+    return cosine_sim
 
     
 """
-Jaccard similarity is a measure of similarity between two sets. It is defined as the size of the intersection divided by the size of the union of the sets. The formula for Jaccard similarity is the size of intersection of two sets over the size of union of two sets.
+Jaccard similarity is a measure of similarity between two sets. 
+It is defined as the size of the intersection divided by the size of the union of the sets. 
+The formula for Jaccard similarity is 
+the size of intersection of two sets over the size of union of two sets.
 
-In NLP, the Jaccard similarity is often used to compare the similarity between two sets of words. For example, it can be used to measure the similarity between two documents based on the sets of words they contain. This is particularly useful in tasks like document clustering, duplicate detection, and information retrieval.
+In NLP, the Jaccard similarity is often used to compare the similarity 
+between two sets of words. 
+For example, it can be used to measure the similarity between two documents 
+based on the sets of words they contain. This is particularly useful in tasks 
+like document clustering, duplicate detection, and information retrieval.
 """
 # Jaccard Index is simple to implement using pure python
 # We take the number of common words ("intersection") between two sets and divide by the number of all unique words (union) between the two sets. 
@@ -93,10 +113,17 @@ def sampleJaccard():
 # Use the above jaccard_similarity function to calculate jaccard similarity of two texts in this function.
 # Come up with 2 texts that will result in jaccard similarity index of 0.3 or greater 
 def jaccardExercise():
+    nltk.download('punkt')
+    nltk.download('words')
     # TODO: Complete this function
-    text1 = ""
-    text2 = ""
+    text1 = "Natural language processing is fascinating technology."
+    text2 = "Natural language processing is good technology."
 
-    jaccard_sim = None
+    # Tokenize the sentences and turn them into sets
+    set1 = set(word_tokenize(text1))
+    set2 = set(word_tokenize(text2))
+
+    # Calculate Jaccard similarity
+    jaccard_sim = jaccard_similarity(set1, set2)
 
     return jaccard_sim
